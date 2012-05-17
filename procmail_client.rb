@@ -11,7 +11,13 @@ outbound_socket.connect("tcp://localhost:42389")
 
 msg = STDIN.read()
 
-json_msg = msg.to_json
+type = "undecided"
+
+if ARGV.length > 0 then
+	type = ARGV[0]
+end
+
+json_msg = { :facility => "mail", :type => type, :priority => "weak", :content => msg.to_json }.to_json
 
 outbound_socket.send(json_msg)
 
