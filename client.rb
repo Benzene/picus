@@ -14,5 +14,6 @@ trap("INT") { receiver.close; context.close; p "Shutting down.."; exit }
 
 while true do
     data = receiver.recv
-    p data
+    msg = JSON.parse(data)
+    p "Facility: #{msg['facility']}, Type: #{msg['type']}, Priority: #{msg['priority']}, Content: #{msg['content'].length}"
 end
