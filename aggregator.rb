@@ -14,8 +14,12 @@ publisher.bind("tcp://*:42390")
 trap("INT") { publisher.close; receiver.close; context.close; p "Shutting down."; exit }
 
 while true do
-    data = receiver.recv
-    publisher.send(data)
-    p "Data processed !"
+    data = receiver.recv(ZMQ::NOBLOCK)
+    if data != nil then
+    	publisher.send(data)
+    	p "Data processed !"
+    else
+        sleep 0.001
+    end
 end
 

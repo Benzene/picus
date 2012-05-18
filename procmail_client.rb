@@ -5,9 +5,14 @@
 require 'zmq'
 require 'json'
 
+server_host = "picus.vpn.leukensis.org"
+server_port = "42389"
+server = "tcp://#{server_host}:#{server_port}"
+
 context = ZMQ::Context.new(1)
 outbound_socket = context.socket(ZMQ::PUSH)
-outbound_socket.connect("tcp://localhost:42389")
+outbound_socket.connect(server)
+#outbound_socket.setsockopt ZMQ::LINGER, 0
 
 msg = STDIN.read()
 
